@@ -1,0 +1,11 @@
+jupyter
+numpy
+pandas
+matplotlib
+netifaces
+coc.py
+requests
+jwt
+asyncio
+nest_asyncio
+pip-tools
