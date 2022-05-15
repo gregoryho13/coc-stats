@@ -3,7 +3,9 @@ from bs4 import BeautifulSoup as bs4
 import asyncio
 import nest_asyncio
 
-def get_player_info(player, limit=['achievements','load_game_data','builder_hall','builder_troops']):
+async def get_player_info(client, player_tag, limit=['achievements','load_game_data','builder_hall','builder_troops']):
+    player = await client.get_player(player_tag)
+    
     # Filter player information on getting only the attributes
     player_attributes = [attr for attr in dir(player) if re.search(r'^[^_]+',attr) and not re.search(r'(_cls)$|^(get_)',attr) and not attr in limit]
     player_data = [getattr(player,attr) for attr in player_attributes]
@@ -41,7 +43,9 @@ def get_player_info(player, limit=['achievements','load_game_data','builder_hall
             player_info[attr] = data if type(data) is int or type(data) is str or type(data) is list else str(data)
     return player_info
 
-async def get_clan_info(clan, limit=['badge','members'], detailed=False):
+async def get_clan_info(client, clan_tag, limit=['badge','members'], detailed=False):
+    clan = await client.get_clan(clan_tag)
+    
     if limit is None:
         limit = ['badge','members']
     else:
@@ -61,7 +65,7 @@ async def get_clan_info(clan, limit=['badge','members'], detailed=False):
     if detailed:
         members = []
         async for player in clan.get_detailed_members():
-            player_info = get_player_info(player)
+            player_info = get_player_info(client, player.tag)
             members.append(player_info)
         clan_info['members'] = members
         
@@ -69,3 +73,29 @@ async def get_clan_info(clan, limit=['badge','members'], detailed=False):
         clan_info['members'] = [player.name+player.tag async for player in clan.get_detailed_members()]
     
     return clan_info
+
+async def get_warlog_info(client, clan_tag):
+    war_log = await client.get_warlog(clan_tag)
+    
+    war_log_info = []
+    for i, war in enumerate(war_log):
+        warlog_attributes = [attr for attr in dir(war) if re.search(r'^[^_]+',attr) and not re.search(r'(_cls)$|^(get_)',attr)]
+        warlog_info = [getattr(war,attr) for attr in warlog_attributes]
+        
+        war_info = {}
+        for attr, info in zip(warlog_attributes, warlog_info):
+            if attr == 'clan' or attr == 'opponent':
+                limit = ['badge','members','attacks','defenses','is_opponent']
+                if attr == 'opponent':
+                    limit += ['exp_earned','attacks_used']
+
+                clan_war_attributes = [attr for attr in dir(info) if re.search(r'^[^_]+',attr) and not re.search(r'(_cls)$|^(get_)',attr) and not attr in limit]
+                for war_attr in clan_war_attributes:
+                    war_info[attr +'_'+war_attr] = getattr(info, war_attr)
+            elif attr == 'end_time':
+                war_info[attr] = format(info.time)
+            else:
+                war_info[attr] = info
+        war_log_info.append(war_info)
+    
+    return war_log_info
