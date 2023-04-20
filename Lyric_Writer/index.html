@@ -1,11 +1,28 @@
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div>
-      <header>
-        <h1>Gregory Ho INST377 Project</h1>
+    <div class="wrapper">
+      <header class="header">
+        <h1>Lyric to Image Album Generator</h1>
       </header>
+      <div class="container">
+        <form action="" class="box">
+          <label for="song">Song:</label>
+          <input type="text" name="song_input" id="song_input"><br><br>
+          <label for="artist">Artist:</label>
+          <input type="text" name="artist_input" id="artist_input"><br><br>
+          <input type="submit" value="Submit">
+        </form>
+        <div class="box">Song Name</div>
+        <div class="box">Images here</div>
+        <div class="box">Lyrics here</div>
+        <div class="box">button here</div>
+      </div>
     </div>
   </body>
 </html>
