@@ -51,7 +51,7 @@ h2, h3 {
   margin: 0 20px;
   display: flex;
   justify-content: space-around;
-  align-items: start;
+  align-items: center;
   flex-flow: column;
   flex:1;
 }
