@@ -90,6 +90,11 @@ h2, h3 {
   margin: 0 auto;
 }
 
+#chartbox {
+  width: 700px;
+  height: 700px;
+}
+
 .footer {
   border: 2px dashed;
   border-radius: 4px;
