@@ -4,6 +4,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://unpkg.com/compromise"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -11,18 +13,22 @@
         <h1>Lyric to Image Album Generator</h1>
       </header>
       <div class="container">
-        <form action="" class="box">
+        <form action="" onsubmit="return false;" class="box main_form">
           <label for="song">Song:</label>
-          <input type="text" name="song_input" id="song_input"><br><br>
+          <input type="text" name="song_input" id="song_input" title="song" placeholder=""><br><br>
           <label for="artist">Artist:</label>
-          <input type="text" name="artist_input" id="artist_input"><br><br>
-          <input type="submit" value="Submit">
+          <input type="text" name="artist_input" id="artist_input" title="artist" placeholder=""><br><br>
+          <input type="submit" value="Submit" id="submit">
         </form>
         <div class="box">Song Name</div>
         <div class="box">Images here</div>
-        <div class="box">Lyrics here</div>
+        <div class="box" id="lyrics" style="white-space: pre-line;">Lyrics here</div>
+        <div id="chartbox">
+          <canvas id="chart"></canvas>
+        </div>
         <button type="button">Button</button>
       </div>
     </div>
+    <script src="./script.js"></script>
   </body>
 </html>
