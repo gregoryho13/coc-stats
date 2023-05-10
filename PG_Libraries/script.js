@@ -22,7 +22,7 @@ function injectHTML(list) {
 /* A quick filter that will return something based on a matching input */
 function filterList(list, query) {
   return list.filter((item) => {
-    const lowerCaseName = item.branch_name.toLowerCase();
+    const lowerCaseName = item.branch_name.toLowerCase() + ' ' + item.branch_type.toLowerCase();
     const lowerCaseQuery = query.toLowerCase();
     return lowerCaseName.includes(lowerCaseQuery);
   });
