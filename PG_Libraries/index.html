@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -18,20 +19,29 @@
         <h1>Prince George's County Library Data</h1>
       </header>
       <div class="container">
-        <div class="left_section box">
-        <h2>Form Inputs</h2>
-          <form action="https://data.princegeorgescountymd.gov/resource/7k64-tdwr.json" class="box main_form">
-            <button type="button" id="data_load">Load Library Data</button>
-            <button type="button" id="data_clear">Clear Library Data</button>
-            <div>
-              <label for="resto">Filter By Library Name</label>
-              <input type="text" id="resto" name="resto"/>
+        <div class="left_container">
+          <div class="left_section box">
+          <h2>Form Inputs</h2>
+            <form action="https://data.princegeorgescountymd.gov/resource/7k64-tdwr.json" class="box main_form">
+              <button type="button" id="data_load">Load Library Data</button>
+              <button type="button" id="data_clear">Clear Library Data</button>
+              <div>
+                <label for="resto">Filter By Library Name</label>
+                <input type="text" id="resto" name="resto"/>
+              </div>
+              <div class="buttons">
+                <button type="button" id="generate">Generate List</button>
+              </div>
+            </form>
+          </div>
+          <div class="chart_area">
+            <div class="chart_section box">
+              <h2>Library Type Chart</h2>
+              <canvas id="libraryChart"></canvas>
             </div>
-            <div class="buttons">
-              <button type="button" id="generate">Generate List</button>
-            </div>
-          </form>
+          </div>
         </div>
+        
         <div class="right_section box">
             <h2>Local Libraries</h2>
             <div id="map" class="box"></div>

@@ -14,7 +14,7 @@ function injectHTML(list) {
   const target = document.querySelector("#library_list");
   target.innerHTML = "";
   list.forEach((item) => {
-    const str = `<li>${item.branch_name}</li>`;
+    const str = `<li>${item.branch_name} (${item.branch_type})</li>`;
     target.innerHTML += str;
   });
 }
@@ -64,7 +64,46 @@ function markerPlace(array, map) {
     console.log('markerPlace', item);
     const coordinates = item.location_1;
 
-    L.marker([coordinates.latitude, coordinates.longitude], {title: item.branch_name}).addTo(map);
+    L.marker([coordinates.latitude, coordinates.longitude], {title: (item.branch_name + ' (' + item.branch_type + ')')}).addTo(map);
+  });
+}
+
+function displayChart(array, chart) {
+  let data_list = {};
+  array.forEach((item) => {
+    const branch_type = item.branch_type
+    if (branch_type in data_list) {
+      data_list[branch_type] += 1;
+    } else {
+      data_list[branch_type] = 1;
+    }
+  });
+
+  console.log(data_list);
+
+  const chartStatus = Chart.getChart("libraryChart");
+  if (chartStatus != undefined) {
+    chartStatus.destroy();
+  }
+
+  new Chart(chart, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(data_list),
+      datasets: [{
+        label: '# of type',
+        data: Object.values(data_list),
+        borderWidth: 1
+      }]
+    },
+    options: {
+      response: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
   });
 }
 
@@ -75,12 +114,15 @@ async function mainEvent() {
   const clearDataButton = document.querySelector("#data_clear");
   const generateListButton = document.querySelector("#generate");
   const textField = document.querySelector("#resto");
+  const chartArea = document.querySelector(".chart_area");
 
   const loadAnimation = document.querySelector("#data_load_animation");
   loadAnimation.style.display = "none";
   generateListButton.classList.add("hidden");
 
   const carto = initMap();
+  const ctx = document.getElementById('libraryChart');
+  chartArea.classList.add("hidden");
 
   const storedData = localStorage.getItem("storedData");
   let parsedData = JSON.parse(storedData);
@@ -122,6 +164,8 @@ async function mainEvent() {
     console.log(currentList);
     injectHTML(currentList);
     markerPlace(currentList, carto);
+    chartArea.classList.remove("hidden");
+    displayChart(currentList, ctx);
   });
   
   textField.addEventListener("input", (event) => {
@@ -130,6 +174,8 @@ async function mainEvent() {
     console.log(newList);
     injectHTML(newList);
     markerPlace(newList, carto);
+    chartArea.classList.remove("hidden");
+    displayChart(newList, ctx);
   });
   
   clearDataButton.addEventListener("click", (event) => {

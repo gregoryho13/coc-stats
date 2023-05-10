@@ -72,6 +72,14 @@
     align-items: start;
     flex:1;
   }
+
+  .left_container {
+    margin: 0 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+  }
   
   .header {
     padding-top: 1rem;
@@ -121,6 +129,11 @@
     height: 380px;
     margin-bottom: 1rem;
   }
+
+  #libraryChart {
+    width: 500px;
+    height: 480 px;
+  }
   
   .box {
     background-color: rgba(239, 239, 239, 0.40);
@@ -147,6 +160,16 @@
     align-items: center;
     justify-content: center;
     max-width: 450px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chart_section {
+    background-color: #deeedc;
+    flex: 1 2 auto;
+    margin: 1rem;
+    justify-content: center;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
   }
@@ -192,94 +215,12 @@
     margin-bottom: 5px;
   }
   
-  
-  /* Deploy this with images as direct "children" and the images should pop into shape */
-  .grid {
-    display: flex;
-    justify-content: space-evenly;
-    flex-flow: wrap;
-    width: 350px;
-    height: 350px;
-    margin: 0 auto;
-  }
-  
-  .grid img {
-    width: 150px;
-    height: 150px;
-  }
-  
-  
-  /* Carousel */
-  div.carousel {
-    max-width: 300px;
-    overflow: hidden;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-  }
-  
-  .carousel .slides {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  /* .carousel_item, */
   .hidden {
     display: none;
   }
   
   .visible {
     display: block;
-  }
-  
-  .carousel_item img {
-    /* 
-      Setting width, rather than max-width or min-width,
-      means annoying pop-ins won't happen
-      but it also means you need to format your images to be compatible
-      or they will stretch weird
-  
-      - try a tall one and see what happens
-      - change the height on a fixed image size and see what happens
-      - now make sure that images are _always_ square
-      - ... there's a reason crop tools are popular in image editors
-     */
-    object-fit: cover;
-    width: 150px;
-    height: 150px;
-  }
-  
-  .prev,
-  .next {
-    border: none;
-    margin: 2px;
-    text-align: center;
-    border-radius: 5px;
-    font-weight: bold;
-    height: 45px;
-    padding: 10px;
-    line-height: 0; /* This centers a button's text! */
-    border: 2px solid rgb(99,99,99); /* shorthand for how to do a border */
-  }
-  
-  .prev:focus,
-  .next:focus {
-    margin: 0;
-    /* Pick a good border colour and check out how it works with your buttons */
-    border: 2px solid rgb(40, 43, 46);
-  }
-  
-  .prev:hover,
-  .next:hover {
-    /* Pick a good background colour for your hover pseudoclass */
-    border: 2px solid rgb(26, 77, 117);
   }
   
   /*
